@@ -1,0 +1,25 @@
+# Mengizinkan CORS
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET,POST,OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+</IfModule>
+
+# Mengaktifkan RewriteEngine
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Jika URL tidak langsung menuju ke file atau direktori, arahkan ke login.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^login\.php$ login.php [L]
+</IfModule>
+
+# Mengatur PHP Error Reporting (Opsional - berguna untuk debugging)
+php_flag display_errors On
+php_value error_reporting 32767
+
+# Menyetel izin agar file PHP dapat diakses
+<FilesMatch "\.php$">
+    Require all granted
+</FilesMatch>
